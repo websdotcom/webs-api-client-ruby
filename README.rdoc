@@ -1,0 +1,41 @@
+== Webs.com REST API Client 
+
+A simple API client which can interact with the {Webs.com REST-based API}[http://wiki.developers.webs.com/wiki/REST_API]. Initializing a WebsApi object is as simple as:
+
+ require 'require webs_api'
+
+ webs_api = WebsApi.new
+
+or alternatively, if you have an OAuth token you'd like to use:
+
+ webs_api = WebsApi.new(oauth_token)
+
+
+== Installation
+
+To install, just install the Gem:
+
+ gem install webs-api
+
+
+== API Calls
+
+
+=== Apps
+
+ webs_api.get_apps
+
+
+=== Sites
+
+ webs_api.get_site('patrick')
+
+or alternatively if you have a site ID, rather than a username:
+
+ webs_api.get_site(1127604)
+
+
+=== Members
+
+ webs_api.get_members('patrick')
+
