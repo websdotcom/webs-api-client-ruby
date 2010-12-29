@@ -139,6 +139,9 @@ class WebsAPI
 					  Net::HTTP::Post.new(uri.request_uri)
 				  when :DELETE
 					  Net::HTTP::Delete.new(uri.request_uri)
+				  else
+					  raise Exception, 
+						  "Unknown request method: #{method.to_s}"
 				  end
 
 		request['Accept'] = 'application/json'
