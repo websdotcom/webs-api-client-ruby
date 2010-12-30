@@ -8,11 +8,14 @@
 #
 # TODO
 # * tests
-# * handle posting data (for example when installing an app)
+# * handle posting data (for example when installing an app or updating a site)
 #
 require 'json'
 require 'net/https'
 require 'uri'
+
+
+class WebsAPIException < StandardError; end
 
 
 class WebsAPIRequest
@@ -32,7 +35,8 @@ class WebsAPIRequest
 	def make_url(args)
 		required_args = @url.count('%')
 		if args.size != required_args
-			raise Exception, "URL #@url requires #{required_args} arguments"
+			raise WebsAPIException, 
+				"URL #@url requires #{required_args} arguments"
 		end
 
 		sprintf(@url, *args)
@@ -103,12 +107,14 @@ class WebsAPI
 				"undefined method '#{sym}' for #{inspect}:#{self.class}"
 		end
 
+		# get the WebsAPIRequest mapping 
 		api_url = API_URLS[sym]
 		if api_url.requires_oauth_token? and not @oauth_token
-			raise Exception, 
+			raise WebsAPIException, 
 				"#{api_url} requires that an OAuth token is set"
 		end
 
+		# pagination arguments
 		page_num, page_size = nil, nil
 		if args.last.is_a? Hash
 			hash_args = args.pop
@@ -147,7 +153,7 @@ class WebsAPI
 				  when :DELETE
 					  Net::HTTP::Delete.new uri.request_uri
 				  else
-					  raise Exception, 
+					  raise WebsAPIException, 
 						  "Unknown request method: #{method.to_s} for #{url}"
 				  end
 
@@ -156,5 +162,3 @@ class WebsAPI
 	end
 end
 
-
-WebsAPI.new.get_site('patrick', page_num: 1, page_size: 20)
