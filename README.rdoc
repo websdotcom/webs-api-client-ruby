@@ -2,28 +2,53 @@
 
 A simple API client which can interact with the {Webs.com REST-based API}[http://wiki.developers.webs.com/wiki/REST_API]. Initializing a WebsApi object is as simple as:
 
- require 'require webs_api'
-
- webs_api = WebsApi.new
+ > require 'require webs_api'
+ > webs_api = WebsApi.new
 
 or alternatively, if you have an OAuth token you'd like to use:
 
- webs_api = WebsApi.new(oauth_token)
+ > webs_api = WebsApi.new(oauth_token)
 
 
 == Installation
 
 To install, just install the Gem:
 
- gem install webs-api
+ $ gem install webs-api
 
 
 == API Calls
 
-
 === Apps
 
- webs_api.get_apps
+==== Get all available apps
+
+ > webs_api.get_apps
+
+==== Get a single app
+
+ > webs_api.get_app('calendar')
+or 
+ > webs_api.get_app(5)
+
+
+=== Templates
+
+==== To get all available templates
+
+ > webs_api.get_templates
+
+==== Get a single template
+
+ > webs_api.get_template(127)
+
+==== Get the styles for a template
+
+ > webs_api.get_template_styles(127)
+
+==== Get a single template style
+
+ > webs_api.get_template_style(251)
 
 
 === Sites
@@ -37,5 +62,21 @@ or alternatively if you have a site ID, rather than a username:
 
 === Members
 
- webs_api.get_members('patrick')
+To get all members of a site:
 
+ webs_api.get_site_members('patrick')
+
+And to get a specific member:
+
+ webs_api.get_site_member('patrick', 'patrick@webs.com')
+
+You can also use an ID of the site member rather than the email
+
+
+== Maintainers
+
+* Patrick Carroll ({github.com/patrickwebs}[http://github.com/patrickwebs])
+
+== License
+
+Apache License, Version 2.0
