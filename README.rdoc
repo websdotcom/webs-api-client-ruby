@@ -2,7 +2,7 @@
 
 A simple API client which can interact with the {Webs.com REST-based API}[http://wiki.developers.webs.com/wiki/REST_API]. Initializing a WebsApi object is as simple as:
 
- > require 'require webs_api'
+ > require 'webs_api'
  > webs_api = WebsApi.new
 
 or alternatively, if you have an OAuth token you'd like to use:
