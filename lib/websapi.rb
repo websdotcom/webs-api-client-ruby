@@ -7,7 +7,6 @@
 # @author Patrick Carroll <patrick@webs.com>
 #
 # TODO
-# * tests
 # * handle posting data (for example when installing an app or updating a site)
 #
 require 'json'

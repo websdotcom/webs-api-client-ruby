@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
 	s.date = '2011-01-04'
 	s.description = 'Client for the Webs.com REST API.'
 	s.files = `git ls-files`.split("\n") + ['lib/websapi.rb']
+	s.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
 	s.homepage = 'http://github.com/websdotcom/webs-api-client-ruby'
 	s.summary = 'Client for the Webs.com REST API.'
 	s.require_paths = ['lib']
