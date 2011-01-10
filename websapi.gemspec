@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
 
 	s.add_dependency('json')
 
-	s.add_development_dependency('rspec')
+	s.add_development_dependency('mocha')
 
 	if s.respond_to? :specification_version then
 		current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
