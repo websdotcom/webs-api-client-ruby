@@ -134,7 +134,7 @@ class WebsAPI
 	end
 
 
-	protected
+	private
 
 	def http_request(url, method)
 		uri = URI.parse url
