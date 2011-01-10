@@ -70,7 +70,7 @@ class WebsAPI
 		:add_site_sidebar => WebsAPIRequest.new('sites/%s/sidebars/%s/', :POST, true),
 		:remove_site_sidebar => WebsAPIRequest.new('sites/%s/sidebars/%s/', :DELETE, true),
 
-		:get_insatlled_apps => WebsAPIRequest.new('sites/%s/apps/'),
+		:get_installed_apps => WebsAPIRequest.new('sites/%s/apps/'),
 		:get_installed_app => WebsAPIRequest.new('sites/%s/apps/%s/'),
 		:install_app => WebsAPIRequest.new('sites/%s/apps/%s/', :POST, true),
 		:uninstall_app => WebsAPIRequest.new('sites/%s/apps/%s/', :DELETE, true),
