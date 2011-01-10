@@ -14,7 +14,7 @@ or alternatively, if you have an OAuth token you'd like to use:
 
 To install, just install the Gem:
 
- $ gem install webs-api
+ $ gem install webs_api
 
 
 == API Calls
