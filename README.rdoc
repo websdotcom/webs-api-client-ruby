@@ -19,45 +19,57 @@ To install, just install the Gem:
 
 == API Calls
 
+
 === Apps
 
 ==== Get all available apps
 
- > webs_api.get_apps
+ webs_api.get_apps
 
 ==== Get a single app
 
- > webs_api.get_app('calendar')
+ webs_api.get_app('calendar')
 or 
- > webs_api.get_app(5)
+ webs_api.get_app(5)
+
+==== Installing and uninstalling an app
+
+ webs_api.install_app('patrick', :handle => 'webstore')
+ webs_api.uninstall_app('patrick', 'webstore')
 
 
 === Templates
 
 ==== To get all available templates
 
- > webs_api.get_templates
+ webs_api.get_templates
 
 ==== Get a single template
 
- > webs_api.get_template(127)
+ webs_api.get_template(127)
 
 ==== Get the styles for a template
 
- > webs_api.get_template_styles(127)
+ webs_api.get_template_styles(127)
 
 ==== Get a single template style
 
- > webs_api.get_template_style(251)
+ webs_api.get_template_style(251)
 
 
 === Sites
+
+==== Getting basic info for a site
 
  webs_api.get_site('patrick')
 
 or alternatively if you have a site ID, rather than a username:
 
  webs_api.get_site(1127604)
+
+==== Updating a site's info
+
+ webs_api.update_site('patrick', :title => "My Site Title", :footer => "My Footer", :description => "My Site Description", :sidebars_enabled => true, :social => true, keywords => ['my', 'site', 'keywords'], :template_id => 127, :custom_css_url => "http://somesite.com/somestyle.css")
 
 
 === Members
