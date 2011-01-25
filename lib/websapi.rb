@@ -136,7 +136,11 @@ class WebsAPI
 
 		url << "?" + query.join("&") unless query.empty?
 
-		JSON.parse http_request(url, api_url.method, arguments)
+		begin
+			JSON.parse http_request(url, api_url.method, arguments)
+		rescue
+			raise WebsAPIException, "Error accessing API url: #{url}"
+		end
 	end
 
 
