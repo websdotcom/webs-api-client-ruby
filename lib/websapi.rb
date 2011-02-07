@@ -137,7 +137,9 @@ class WebsAPI
 		url << "?" + query.join("&") unless query.empty?
 
 		begin
-			JSON.parse http_request(url, api_url.method, arguments)
+			json = http_request(url, api_url.method, arguments)
+			return nil if json.nil?
+			JSON.parse json
 		rescue
 			raise WebsAPIException, "Error accessing API url: #{url}"
 		end
@@ -175,7 +177,12 @@ class WebsAPI
 
 		# expect JSON data in the response
 		request['Accept'] = 'application/json'
-		http.request(request).body
+		res = http.request(request)
+		if res == Net::HTTPSuccess
+			res.body
+		else
+			# XXX handle other HTTP errors
+			nil
+		end
 	end
 end
-
