@@ -178,11 +178,12 @@ class WebsAPI
 		# expect JSON data in the response
 		request['Accept'] = 'application/json'
 		res = http.request(request)
-		if res == Net::HTTPSuccess
+		case res
+		when Net::HTTPSuccess
 			res.body
 		else
 			# XXX handle other HTTP errors
-			nil
+			return nil
 		end
 	end
 end
