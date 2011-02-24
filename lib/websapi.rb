@@ -9,6 +9,7 @@
 #
 require 'json'
 require 'net/https'
+require 'oauth2'
 require 'uri'
 
 
@@ -49,7 +50,7 @@ end
 class WebsAPI
 	# the mapping of WebsAPIRequest objects to API calls
 	API_URLS = {
-		:get_apps 				=> WebsAPIRequest.new('apps/'),
+		:get_apps 				=> WebsAPIRequest.new('apps/', :GET, false, [:category, :featured]),
 		:get_app 				=> WebsAPIRequest.new('apps/%s'),
 
 		:get_templates 			=> WebsAPIRequest.new('templates/'),
@@ -71,6 +72,9 @@ class WebsAPI
 
 		:get_installed_apps 	=> WebsAPIRequest.new('sites/%s/apps/'),
 		:get_installed_app 		=> WebsAPIRequest.new('sites/%s/apps/%s'),
+		:get_app_purchases		=> WebsAPIRequest.new('sites/%s/apps/%s/purchases', :GET, true),
+		:get_app_purchase		=> WebsAPIRequest.new('sites/%s/apps/%s/purchases/%s', :GET, true),
+		:update_app_purchase	=> WebsAPIRequest.new('sites/%s/apps/%s/purchases/%s', :PUT, true, [:confirmed])
 		:install_app 			=> WebsAPIRequest.new('sites/%s/apps/', :POST, true, [:handle, :id]),
 		:uninstall_app 			=> WebsAPIRequest.new('sites/%s/apps/%s', :DELETE, true),
 
@@ -134,6 +138,14 @@ class WebsAPI
 		query << "page=#{page_num}" if page_num
 		query << "pagesize=#{page_size}" if page_size
 
+		# if it's a GET, append any arguments as query params
+		if api_url.method == :GET 
+			arguments.each do |k, v|
+				query << "#{k.to_s}=#{v}"
+			end
+		end
+
+		# now build the url with our query string
 		url << "?" + query.join("&") unless query.empty?
 
 		begin
