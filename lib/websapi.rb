@@ -92,6 +92,8 @@ module Webs
 			:get_site_member_feeds	=> WebsAPIRequest.new('sites/%s/members/%s/feeds/'),
 		}
 
+		API_ACCESS_TOKEN_URL = 'https://api.webs.com/oauth/access_token'
+
 		attr_accessor :oauth_token
 
 
@@ -99,6 +101,34 @@ module Webs
 			@oauth_token = oauth_token
 		end
 
+
+		# Connects to the Webs API and does the "client credentials" aka 
+		# 2-legged flow.  The given client_id and client_secret must be pre-
+		# approved for this flow to work.
+		def get_client_credentials_token(client_id, client_secret, scope)
+			uri = URI.parse API_ACCESS_TOKEN_URL
+			http = Net::HTTP.new(uri.host, uri.port)
+			http.use_ssl = true
+			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+			request = Net::HTTP::Post.new uri.request_uri
+			request.content_type = 'application/x-www-form-urlencoded'
+			request['Accept'] = 'application/json'
+			request.set_form_data({
+				'grant_type' => 'client_credentials', 'scope' => scope,
+				'client_id' => client_id, 'client_secret' => client_secret,
+			})
+
+			res = http.request(request)
+			case res
+				when Net::HTTPSuccess
+					body = JSON.parse res.body
+					@oauth_token = body['access_token']
+				else
+					raise WebsAPIException, 
+						"Unable complete client credentials flow using the given info."
+			end
+		end
 
 		def respond_to?(sym)
 			super or API_URLS.has_key? sym
