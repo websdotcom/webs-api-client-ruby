@@ -180,7 +180,7 @@ module Webs
 
 			begin
 				json = http_request(url, api_url.method, arguments)
-				return nil if json.nil?
+				return nil if json.nil? or json.empty?
 				JSON.parse json
 			rescue
 				raise WebsAPIException, "Error accessing API url: #{url}"
