@@ -95,6 +95,9 @@ module Webs
 
 		def initialize(api_url='https://api.webs.com/', oauth_token=nil)
 			@api_url = api_url
+			if not @api_url.end_with? '/'
+				@api_url << '/'
+
 			@api_access_token_url = api_url + 'oauth/access_token'
 			@oauth_token = oauth_token
 		end
