@@ -17,15 +17,13 @@ module Webs
 
 
 	class WebsAPIRequest
-		API_URL = 'https://api.webs.com/'
-
 		attr_accessor :url, :method, :requires_oauth_token, :allowed_args
 
 		alias requires_oauth_token? requires_oauth_token
 
 
 		def initialize(url, method=:GET, requires_oauth_token=false, allowed_args=[])
-			@url = url.start_with?(API_URL) ? url : API_URL + url
+			@url = url
 			@method = method
 			@requires_oauth_token = requires_oauth_token
 			@allowed_args = allowed_args
@@ -92,12 +90,12 @@ module Webs
 			:get_site_member_feeds	=> WebsAPIRequest.new('sites/%s/members/%s/feeds/'),
 		}
 
-		API_ACCESS_TOKEN_URL = 'https://api.webs.com/oauth/access_token'
-
-		attr_accessor :oauth_token
+		attr_accessor :api_url, :api_access_token_url, :oauth_token
 
 
-		def initialize(oauth_token=nil)
+		def initialize(api_url='https://api.webs.com/', oauth_token=nil)
+			@api_url = api_url
+			@api_access_token_url = api_url + 'oauth/access_token'
 			@oauth_token = oauth_token
 		end
 
@@ -161,7 +159,7 @@ module Webs
 			end
 
 
-			url = api_url.make_url(args) 
+			url = @api_url + api_url.make_url(args) 
 
 			query = []
 			query << "oauth_token=#{@oauth_token}" if @oauth_token
