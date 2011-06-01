@@ -106,7 +106,7 @@ module Webs
 		# 2-legged flow.  The given client_id and client_secret must be pre-
 		# approved for this flow to work.
 		def get_client_credentials_token(client_id, client_secret, scope)
-			uri = URI.parse API_ACCESS_TOKEN_URL
+			uri = URI.parse @api_access_token_url
 			http = Net::HTTP.new(uri.host, uri.port)
 			http.use_ssl = true
 			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -194,6 +194,7 @@ module Webs
 			uri = URI.parse url
 			http = Net::HTTP.new(uri.host, uri.port)
 			http.use_ssl = true
+			# XXX we should probably verify SSL
 			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 			request = case method
