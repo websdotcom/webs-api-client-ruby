@@ -108,8 +108,10 @@ module Webs
 		def get_client_credentials_token(client_id, client_secret, scope)
 			uri = URI.parse @api_access_token_url
 			http = Net::HTTP.new(uri.host, uri.port)
-			http.use_ssl = true
-			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+			if @api_access_token_url.start_with? 'https://'
+				http.use_ssl = true
+				http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+			end
 
 			request = Net::HTTP::Post.new uri.request_uri
 			request.content_type = 'application/x-www-form-urlencoded'
@@ -193,9 +195,12 @@ module Webs
 		def http_request(url, method, arguments={})
 			uri = URI.parse url
 			http = Net::HTTP.new(uri.host, uri.port)
-			http.use_ssl = true
-			# XXX we should probably verify SSL
-			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+			if url.start_with? 'https://'
+				http.use_ssl = true
+				# XXX we should probably verify SSL
+				http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+			end
 
 			request = case method
 					  when :GET 
