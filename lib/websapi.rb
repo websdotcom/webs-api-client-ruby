@@ -32,8 +32,7 @@ module Webs
 		def make_url(args)
 			required_args = @url.count('%')
 			if args.size != required_args
-				raise WebsAPIException, 
-					"URL #@url requires #{required_args} arguments"
+				raise WebsAPIException, "URL #@url requires #{required_args} arguments"
 			end
 
 			sprintf(@url, *args)
@@ -58,6 +57,7 @@ module Webs
 
 			:get_site                 => WebsAPIRequest.new('sites/%s'),
 			:update_site              => WebsAPIRequest.new('sites/%s', :PUT, true, [:title, :footer, :description, :sidebars_enabled, :social, :keywords, :template_id, :custom_css_url]),
+			:delete_site              => WebsAPIRequest.new('sites/%s', :DELETE, true),
 			:get_site_feeds           => WebsAPIRequest.new('sites/%s/feeds/'),
 			:get_site_navbar_links 	  => WebsAPIRequest.new('sites/%s/navbar/'),
 			:get_site_navbar_link 	  => WebsAPIRequest.new('sites/%s/navbar/%s'),
