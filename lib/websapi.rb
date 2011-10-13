@@ -55,6 +55,7 @@ module Webs
 			:get_template_styles 	    => WebsAPIRequest.new('templates/%s/styles/'),
 			:get_template_style 	    => WebsAPIRequest.new('templates/%s/styles/%s'),
 
+      :create_site              => WebsAPIRequest.new('sites/', :POST, true, [:email_address, :password, :site_address, :site_title, :category_id, :template_id, :chosen_pages, :ip_address, :referer, :language, :account_level])
 			:get_site                 => WebsAPIRequest.new('sites/%s'),
 			:update_site              => WebsAPIRequest.new('sites/%s', :PUT, true, [:title, :footer, :description, :sidebars_enabled, :social, :keywords, :template_id, :custom_css_url]),
 			:delete_site              => WebsAPIRequest.new('sites/%s', :DELETE, true),
